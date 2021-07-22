@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+    environment:
+      SERVICES: sqs,s3,cloudwatch,lambda,logs,iam,apigateway,ssm,cloudformation,sts
+      EDGE_PORT: 4566
+      AWS_DEFAULT_REGION: us-east-1
+      DEBUG: 1
+      HOSTNAME_EXTERNAL: localstack
+      LAMBDA_REMOVE_CONTAINERS: "false"
+      LAMBDA_REMOTE_DOCKER: "false"
+    volumes:
+      - /tmp/localstack/:/tmp/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  deploy:
+    build:
+      context: .
+      dockerfile: deploy.Dockerfile
+    image: ftc/deploy:local
+    env_file:
+      - .env.local
+    command: /app/bin/localstack
+    volumes:
+      - .:/app/
+    depends_on:
+      - localstack

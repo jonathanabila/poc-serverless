@@ -1,0 +1,29 @@
+{
+  "author": "",
+  "description": "",
+  "devDependencies": {
+    "serverless": "^2.52.0",
+    "serverless-domain-manager": "^5.1.3",
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-localstack": "^0.4.32",
+    "serverless-offline": "^7.0.0",
+    "serverless-plugin-log-retention": "^2.0.0",
+    "serverless-prune-plugin": "^1.5.1",
+    "serverless-python-requirements": "^5.1.1",
+    "serverless-stage-manager": "^1.0.5"
+  },
+  "directories": {
+    "test": "src/tests"
+  },
+  "license": "ISC",
+  "main": "index.js",
+  "name": "catalog-api",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:academicmerit/ftc-api.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

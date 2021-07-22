@@ -1,0 +1,46 @@
+#!/bin/bash
+
+POETRY_VERSION="1.1.6"
+PYTHON_VERSION="3.8.5"
+VENV_NAME="poc-serverless-venv"
+
+YELLOW='\033[1;33m'
+RED='\033[1;31m'
+NC='\033[0m'
+
+echo  -e "${YELLOW}* Reading pyenv${NC}"
+if which pyenv
+then
+  echo -e "${YELLOW}* Upgrading pyenv${NC}"
+#  pyenv update
+else
+  echo -e "${RED}* You have to install pyenv manually and add a few lines to your bash profile.${NC}"
+  echo -e "${RED}* You can find a tutorial on the README.md.${NC}"
+  exit 1
+fi
+
+pyenv local $VENV_NAME
+
+echo -e "${YELLOW}* Reading python-$PYTHON_VERSION${NC}"
+pyenv versions | grep -q $PYTHON_VERSION || {
+  echo -e "${YELLOW}* Installing python-$PYTHON_VERSION${NC}"
+  pyenv install $PYTHON_VERSION
+}
+
+echo -e "${YELLOW}* Reading $VENV_NAME${NC}"
+pyenv virtualenvs | grep -q $VENV_NAME || {
+    echo "Creating $VENV_NAME..."
+    pyenv virtualenv $VENV_NAME
+}
+
+echo -e "${YELLOW}* Activating virtualenv${NC}"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+echo -e "${YELLOW}* Installing pip packages${NC}"
+pip install -U pip
+pip install "poetry==${POETRY_VERSION}"
+poetry install
+
+echo -e "${YELLOW}* Installing pre-commit${NC}"
+pre-commit install

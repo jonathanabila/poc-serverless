@@ -1,0 +1,8 @@
+node_modules/
+**/serverless.egg-info
+
+requirements.txt
+
+.serverless
+
+.idea/

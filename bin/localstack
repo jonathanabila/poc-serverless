@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euf
+IFS=$'\n\t'
+
+echo "Waiting localstack to be ready"
+waitforit --timeout=0 localstack:4566
+
+echo "Deploying API"
+
+bin/poetry-export
+
+serverless deploy --stage local
+echo "API deployed"

@@ -1,0 +1,5 @@
+#!/bin/bash
+set -euf
+
+# Create the requirement file used by serverless to package the code.
+poetry export --without-hashes -f requirements.txt -o requirements.txt --with-credentials
